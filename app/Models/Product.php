@@ -30,4 +30,27 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class)->withPivot('quantity', 'price')->withTimestamps();
     }
+
+
+    /**
+     * Scope a query to search products by name and filter by price range.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string|null $name
+     * @param float|null $minPrice
+     * @param float|null $maxPrice
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearch($query, $name = null, $minPrice = null, $maxPrice = null)
+    {
+        if ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        }
+
+        if ($minPrice && $maxPrice) {
+            $query->whereBetween('price', [$minPrice, $maxPrice]);
+        }
+
+        return $query;
+    }
 }
