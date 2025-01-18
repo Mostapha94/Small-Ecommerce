@@ -38,4 +38,41 @@ class ProductRepository implements ProductRepositoryInterface
             return $query->orderBy('id')->cursorPaginate(10);
         });
     }
+
+    /**
+     * Create a new product in the database.
+     *
+     * @param array $data
+     * @return Product
+     */
+    public function create(array $data): Product
+    {
+        return Product::create($data);
+    }
+
+      /**
+     * Retrieve a product by its ID.
+     *
+     * @param int $id The ID of the product.
+     * @return Product|null The product instance or null if not found.
+     */
+    public function show(int $id): ?Product
+    {
+        return Product::findOrFail($id);
+    }
+
+    /**
+     * Update an existing product by its ID.
+     *
+     * @param int $id The ID of the product.
+     * @param array $data The updated data.
+     * @return Product The updated product instance.
+     */
+    public function update(int $id, array $data): Product
+    {
+        $product = Product::findOrFail($id);
+        $product->update($data);
+
+        return $product;
+    }
 }
