@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -10,7 +12,6 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'slug',
         'price',
         'discount_price',
         'stock',
@@ -52,5 +53,20 @@ class Product extends Model
         }
 
         return $query;
+    }
+
+    /**
+     * Set the slug attribute before saving the product.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setSlugAttribute($value)
+    {
+        if (empty($value)) {
+            $this->attributes['slug'] = Str::slug($this->name);
+        } else {
+            $this->attributes['slug'] = $value;
+        }
     }
 }

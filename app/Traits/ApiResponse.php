@@ -52,7 +52,7 @@ trait ApiResponse
      * @param array $errors The validation errors.
      * @return \Illuminate\Http\JsonResponse The JSON response object.
      */
-    public function validationError($errors)
+    public function validationErrors($errors)
     {
         return response()->json([
             'response' => [

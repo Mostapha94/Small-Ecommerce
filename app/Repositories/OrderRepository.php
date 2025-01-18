@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Repositories\Interfaces\OrderRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class OrderRepository implements OrderRepositoryInterface
@@ -17,9 +18,7 @@ class OrderRepository implements OrderRepositoryInterface
     public function create(array $data): Order
     {
         return DB::transaction(function () use ($data) {
-            $order = Order::create([
-                'user_id' => $data['user_id'],
-            ]);
+            $order = Order::create($data);
 
             foreach ($data['products'] as $productData) {
                 $product = Product::findOrFail($productData['product_id']);

@@ -16,11 +16,8 @@ return new class extends Migration
             $table->string('name'); // Product name
             $table->string('slug')->unique(); // SEO-friendly URL
             $table->decimal('price', 10, 2); // Base price
-            $table->decimal('discount_price', 10, 2)->nullable(); // Discounted price
             $table->unsignedInteger('stock')->default(0); // Available stock
             $table->text('description')->nullable(); // Detailed description
-            $table->string('image')->nullable(); // Main product image URL
-            $table->json('additional_images')->nullable(); // JSON array of additional image URLs
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->boolean('is_active')->default(true); // Active status
             $table->timestamps();

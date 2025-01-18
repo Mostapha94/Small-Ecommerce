@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
-use App\Repositories\OrderRepositoryInterface;
+use App\Repositories\Interfaces\OrderRepositoryInterface;
+use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 
 class OrderController extends Controller
 {
+    use ApiResponse;
+    
     protected $orderRepository;
 
     /**
@@ -31,10 +34,8 @@ class OrderController extends Controller
     {
         try {
             $order = $this->orderRepository->create($request->validated());
-            return response()->json([
-                'message' => 'Order created successfully!',
-                'data' => new OrderResource($order),
-            ], 201);
+            return $this->success('Product created successfully',  new OrderResource($order), 201);
+
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 class StoreOrderRequest extends FormRequest
 {
     /**
@@ -28,6 +26,9 @@ class StoreOrderRequest extends FormRequest
             'products' => 'required|array',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
+            'customer_phone' => 'required|string|max:11',
+            'shipping_address' => 'required|string|max:255',
+            'total_price'   => 'required'
         ];
     }
 }
